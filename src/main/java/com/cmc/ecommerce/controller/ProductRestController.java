@@ -19,8 +19,9 @@ public class ProductRestController {
     @Autowired
     ProductService productService;
 
-    @GetMapping(value = "getAllProductsUser/{currentPage}/{pageSize}")
-    public ResponseEntity getAllProductsUser(@PathVariable("currentPage") int currentPage, @PathVariable("pageSize") int pageSize){
+    @GetMapping(value = "products")
+    public ResponseEntity getAllProductsUser(@RequestParam(value = "page") int currentPage,
+                                             @RequestParam(value = "size") int pageSize){
         List<Product> listProduct = new ArrayList<>();
 
         List<ProductMapper> listDTO = new ArrayList<>();
@@ -30,18 +31,20 @@ public class ProductRestController {
         return new ResponseEntity<>(listDTO,listDTO==null? HttpStatus.BAD_REQUEST : HttpStatus.OK);
     }
 
-    @GetMapping(value = "getDetailProduct/{id}")
-    public ResponseEntity getDetailProductUser(@PathVariable("id") Long id){
+    @GetMapping(value = "products/details")
+    public ResponseEntity getDetailProductUser(@RequestParam(value = "id") Long id){
         Product prd = productService.selectByPrimaryKey(id);
         ProductMapper prdDTO = ProductMap.dtoMapProduct(prd);
         return new ResponseEntity<>(prdDTO,prdDTO==null? HttpStatus.BAD_REQUEST : HttpStatus.OK);
 
     }
 
-    @GetMapping(value = "search/{currentPage}/{pageSize}")
-    public ResponseEntity searchProductUser(@RequestBody ProductMapper dto , @PathVariable("currentPage") int currentPage, @PathVariable("pageSize") int pageSize){
+    @GetMapping(value = "search")
+    public ResponseEntity searchProductUser(@RequestParam(value = "name") String name ,
+                                            @RequestParam(value = "page") int currentPage,
+                                            @RequestParam(value = "size") int pageSize){
         List<Product> list  = new ArrayList<>();
-        list = productService.search(dto.getName(),currentPage,pageSize);
+        list = productService.search(name,currentPage,pageSize);
 
         List<ProductMapper> listDTO = ProductMap.dtoMapProduct(list);
 

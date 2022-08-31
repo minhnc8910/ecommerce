@@ -7,10 +7,11 @@ package com.cmc.ecommerce.service.impl;
 import com.cmc.ecommerce.dao.ProductMapper;
 import com.cmc.ecommerce.model.Product;
 import com.cmc.ecommerce.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
@@ -52,5 +53,6 @@ public class ProductServiceImpl implements ProductService {
         int offset = (current_page-1)* page_size;
         page_size = offset+page_size;
         return productMapper.search(name, offset,page_size);
+
     }
 }
