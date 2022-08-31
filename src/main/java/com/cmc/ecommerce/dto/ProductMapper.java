@@ -11,10 +11,10 @@ import java.util.List;
 @Data
 public class ProductMapper {
     private long id;
-    private String name;
+    private String displayName;
     private Double price;
-    private String desc;
-    private List<ImageMapper> imgUrl;
-    private List<CategoryMapper> imgCtg;
+    private String description;
+    private List<ImageMapper> images;
+    private List<CategoryMapper> categories;
 
 }
