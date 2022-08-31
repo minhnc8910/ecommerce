@@ -31,6 +31,6 @@ public class EcommerceApplication implements CommandLineRunner {
 //        user.setEmail("manhnv@cmcglobal.vn");
 //        user.setPassword(passwordEncoder.encode("123456"));
 //        userMapper.insert(user);
-        System.out.println("Dhtu");
+        System.out.println("123123");
     }
 }
