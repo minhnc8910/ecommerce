@@ -1,6 +1,7 @@
 /**
- * @mbg.generated generator on Fri Aug 26 13:35:25 GMT+07:00 2022
- */
+* @mbg.generated
+* generator on Mon Aug 29 08:55:05 GMT+07:00 2022
+*/
 package com.cmc.ecommerce.service;
 
 import com.cmc.ecommerce.model.Product;
@@ -14,7 +15,9 @@ public interface ProductService {
 
     Product selectByPrimaryKey(Long id);
 
-    List<Product> selectAll();
+    List<Product> selectAll(int current_page, int page_size);
 
     int updateByPrimaryKey(Product row);
+
+    List<Product> search(String name, int current_page, int page_size);
 }

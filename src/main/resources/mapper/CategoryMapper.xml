@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.cmc.ecommerce.model.Category">
     <!--@mbg.generated -->
     <!--@Table category -->
-    <!-- generated on Fri Aug 26 13:34:44 GMT+07:00 2022 -->
+    <!-- generated on Tue Aug 30 10:47:31 GMT+07:00 2022 -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />

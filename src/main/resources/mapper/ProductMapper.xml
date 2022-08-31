@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.cmc.ecommerce.model.Product">
     <!--@mbg.generated -->
     <!--@Table product -->
-    <!-- generated on Fri Aug 26 13:35:25 GMT+07:00 2022 -->
+    <!-- generated on Mon Aug 29 08:55:05 GMT+07:00 2022 -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="price" jdbcType="DOUBLE" property="price" />
@@ -42,38 +42,59 @@
       updated_id = #{updatedId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="search"  resultMap="ProductResultMap">
     <!--@mbg.generated -->
-    select id, `name`, price, `desc`, delete_yn, created_dtm, created_id, updated_dtm, 
-    updated_id
-    from product
-    where id = #{id,jdbcType=BIGINT}
+      select * from (  select a.id, a.`name`, a.price, a.`desc`, a.delete_yn, a.created_dtm, a.created_id, a.updated_dtm,
+      a.updated_id, i.id as img_id, i.url as img_url, pc.category_id as ctg_id, pc.name as ctg_name , DENSE_RANK() OVER (ORDER BY a.id) rnum
+      from product a left join image i on a.id = i.product_id
+      left join (select z.category_id, z.product_id, w.name from product_category z inner join category w on z.category_id = w.id )pc on a.id = pc.product_id
+      WHERE a.`name` like '%'  #{nameSearch,jdbcType=NVARCHAR}  '%'
+      ) as tbl1
+      where tbl1.rnum > #{current_page,jdbcType=INTEGER} and #{page_size,jdbcType=INTEGER} >= tbl1.rnum
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ProductResultMap">
+        <!--@mbg.generated -->
+        select a.id, a.`name`, a.price, a.`desc`, a.delete_yn, a.created_dtm, a.created_id, a.updated_dtm,
+        a.updated_id, i.id as img_id, i.url as img_url, pc.category_id as ctg_id, pc.name as ctg_name
+        from product a left join image i on a.id = i.product_id
+        left join (select z.category_id, z.product_id, w.name from product_category z inner join category w on z.category_id = w.id )pc on a.id = pc.product_id
+        where a.id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+  <select id="selectAll" resultMap="ProductResultMap">
     <!--@mbg.generated -->
-    select id, `name`, price, `desc`, delete_yn, created_dtm, created_id, updated_dtm, 
-    updated_id
-    from product
+   select * from ( select a.id, a.`name`, a.price, a.`desc`, a.delete_yn, a.created_dtm, a.created_id, a.updated_dtm,
+    a.updated_id, i.id as img_id, i.url as img_url, pc.category_id as ctg_id, pc.name as ctg_name <!--, ROW_NUMBER() OVER (ORDER BY id) rnum-->
+    , DENSE_RANK() OVER (ORDER BY a.id) rnum
+    from product a left join image i on a.id = i.product_id
+               left join (select z.category_id, z.product_id, w.name from product_category z inner join category w on z.category_id = w.id )pc on a.id = pc.product_id
+    ) as tbl1
+    where tbl1.rnum > #{current_page,jdbcType=INTEGER} and #{page_size,jdbcType=INTEGER} >= tbl1.rnum
   </select>
-  <select id="search" parameterType="com.cmc.ecommerce.model.Product" resultMap="BaseResultMap">
-    select id, `name`, price, description, is_active
-    from product
-    <where>
-      <if test="id != null">
-        id = #{id}
-      </if>
-      <if test="name != null">
-        and name = #{name}
-      </if>
-      <if test="price != null">
-        and price = #{price}
-      </if>
-      <if test="description != null">
-        and description = #{description}
-      </if>
-      <if test="isActive != null">
-        and is_active = #{isActive}
-      </if>
-    </where>
-  </select>
+
+  <resultMap id="ProductResultMap" type="com.cmc.ecommerce.model.Product">
+          <id property="id" column="id"/>
+          <result property="name" column="name" />
+          <result property="price" column="price" />
+          <result property="desc" column="desc" />
+          <result property="deleteYn" column="delete_yn" />
+          <result property="createdDtm" column="created_dtm" />
+          <result property="createdId" column="created_id" />
+          <result property="updatedDtm" column="updated_dtm" />
+          <result property="updatedId" column="updated_id" />
+          <collection  property="listImg"  javaType="ArrayList" ofType="Image" resultMap="productImgList" columnPrefix="img_" />
+          <collection  property="listCategory"  javaType="ArrayList" ofType="Category" resultMap="productCtgList" columnPrefix="ctg_"  />
+
+  </resultMap>
+
+  <resultMap id="productImgList"  type="com.cmc.ecommerce.model.Image" >
+    <result property="id"  column="id"/>
+    <result property="url" column="url"/>
+  </resultMap>
+  <resultMap id="productCtgList" type="com.cmc.ecommerce.model.Category">
+    <result property="id"  column="id"/>
+    <result property="name" column="name"/>
+  </resultMap>
 </mapper>
