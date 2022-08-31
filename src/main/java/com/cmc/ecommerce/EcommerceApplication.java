@@ -18,19 +18,18 @@ public class EcommerceApplication implements CommandLineRunner {
         SpringApplication.run(EcommerceApplication.class, args);
     }
 
-//    @Autowired
-//    private UserMapper userMapper;
-//
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
 //        User user = new User();
-//        user.setName("Nguyễn Văn Mạnh");
-//        user.setEmail("manhnv@cmcglobal.vn");
+//        user.setName("Huy Tú");
+//        user.setEmail("dhtu1@cmcglobal.vn");
 //        user.setPassword(passwordEncoder.encode("123456"));
 //        userMapper.insert(user);
-        System.out.println("123123");
     }
 }

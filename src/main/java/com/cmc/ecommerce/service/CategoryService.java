@@ -1,7 +1,8 @@
 /**
- * @mbg.generated generator on Fri Aug 26 13:34:44 GMT+07:00 2022
+ * @mbg.generated generator on Tue Aug 30 10:47:31 GMT+07:00 2022
  */
 package com.cmc.ecommerce.service;
+
 
 import com.cmc.ecommerce.model.Category;
 

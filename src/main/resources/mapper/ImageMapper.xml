@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.cmc.ecommerce.model.Image">
     <!--@mbg.generated -->
     <!--@Table image -->
-    <!-- generated on Fri Aug 26 13:35:12 GMT+07:00 2022 -->
+    <!-- generated on Mon Aug 29 08:54:41 GMT+07:00 2022 -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
     <result column="url" jdbcType="VARCHAR" property="url" />
@@ -51,4 +51,14 @@
     select id, product_id, url, `desc`, created_dtm, created_id, updated_dtm, updated_id
     from image
   </select>
+
+  <select id="selectAllByProductID" resultMap="BaseResultMap">
+    <!--@mbg.generated -->
+    select id, product_id, url, `desc`, created_dtm, created_id, updated_dtm, updated_id
+    from image
+   where
+      product_id= #{productID,jdbcType=BIGINT}
+
+  </select>
+
 </mapper>
