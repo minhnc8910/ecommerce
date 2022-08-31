@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmc.ecommerce.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.cmc.ecommerce.model.Product">
+    <!--@mbg.generated -->
+    <!--@Table product -->
+    <!-- generated on Fri Aug 26 13:35:25 GMT+07:00 2022 -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="delete_yn" jdbcType="TINYINT" property="deleteYn" />
+    <result column="created_dtm" jdbcType="TIMESTAMP" property="createdDtm" />
+    <result column="created_id" jdbcType="BIGINT" property="createdId" />
+    <result column="updated_dtm" jdbcType="TIMESTAMP" property="updatedDtm" />
+    <result column="updated_id" jdbcType="BIGINT" property="updatedId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated -->
+    delete from product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cmc.ecommerce.model.Product" useGeneratedKeys="true">
+    <!--@mbg.generated -->
+    insert into product (`name`, price, `desc`, 
+      delete_yn, created_dtm, created_id, 
+      updated_dtm, updated_id)
+    values (#{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{desc,jdbcType=VARCHAR}, 
+      #{deleteYn,jdbcType=TINYINT}, #{createdDtm,jdbcType=TIMESTAMP}, #{createdId,jdbcType=BIGINT}, 
+      #{updatedDtm,jdbcType=TIMESTAMP}, #{updatedId,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.cmc.ecommerce.model.Product">
+    <!--@mbg.generated -->
+    update product
+    set `name` = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      `desc` = #{desc,jdbcType=VARCHAR},
+      delete_yn = #{deleteYn,jdbcType=TINYINT},
+      created_dtm = #{createdDtm,jdbcType=TIMESTAMP},
+      created_id = #{createdId,jdbcType=BIGINT},
+      updated_dtm = #{updatedDtm,jdbcType=TIMESTAMP},
+      updated_id = #{updatedId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated -->
+    select id, `name`, price, `desc`, delete_yn, created_dtm, created_id, updated_dtm, 
+    updated_id
+    from product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    <!--@mbg.generated -->
+    select id, `name`, price, `desc`, delete_yn, created_dtm, created_id, updated_dtm, 
+    updated_id
+    from product
+  </select>
+  <select id="search" parameterType="com.cmc.ecommerce.model.Product" resultMap="BaseResultMap">
+    select id, `name`, price, description, is_active
+    from product
+    <where>
+      <if test="id != null">
+        id = #{id}
+      </if>
+      <if test="name != null">
+        and name = #{name}
+      </if>
+      <if test="price != null">
+        and price = #{price}
+      </if>
+      <if test="description != null">
+        and description = #{description}
+      </if>
+      <if test="isActive != null">
+        and is_active = #{isActive}
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="Product" type="com.cmc.ecommerce.model.Product"/>
+        <typeAlias alias="User" type="com.cmc.ecommerce.model.User"/>
+        <typeAlias alias="Role" type="com.cmc.ecommerce.model.Role"/>
+    </typeAliases>
+    <mappers>
+        <mapper resource="mapper/ProductMapper.xml" />
+        <mapper resource="mapper/UserMapper.xml" />
+        <mapper resource="mapper/RoleMapper.xml" />
+    </mappers>
+</configuration>
