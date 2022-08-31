@@ -31,8 +31,8 @@ public class ProductRestController {
         return new ResponseEntity<>(listDTO,listDTO==null? HttpStatus.BAD_REQUEST : HttpStatus.OK);
     }
 
-    @GetMapping(value = "products/details")
-    public ResponseEntity getDetailProductUser(@RequestParam(value = "id") Long id){
+    @GetMapping(value = "products/{id}")
+    public ResponseEntity getDetailProductUser(@PathVariable("id") Long id){
         Product prd = productService.selectByPrimaryKey(id);
         ProductMapper prdDTO = ProductMap.dtoMapProduct(prd);
         return new ResponseEntity<>(prdDTO,prdDTO==null? HttpStatus.BAD_REQUEST : HttpStatus.OK);
