@@ -66,11 +66,14 @@
   <select id="selectAll" resultMap="ProductResultMap">
     <!--@mbg.generated -->
    select * from ( select a.id, a.`name`, a.price, a.`desc`, a.delete_yn, a.created_dtm, a.created_id, a.updated_dtm,
-    a.updated_id, i.id as img_id, i.url as img_url, pc.category_id as ctg_id, pc.name as ctg_name <!--, ROW_NUMBER() OVER (ORDER BY id) rnum-->
+    a.updated_id, i.id as img_id, i.url as img_url, pc.category_id as ctg_id, pc.name as ctg_name, u.id as createdID, u.name as creatorName, u.email as creatorEmail,
+      u1.id as modifierID, u1.name as modifierName, u1.email as modifierEmail <!--, ROW_NUMBER() OVER (ORDER BY id) rnum-->
     , DENSE_RANK() OVER (ORDER BY a.id) rnum
     from product a left join image i on a.id = i.product_id
                left join (select z.category_id, z.product_id, w.name from product_category z inner join category w on z.category_id = w.id )pc on a.id = pc.product_id
-    ) as tbl1
+                left join user u on u.id = a.created_id
+                left join user u1 on u.id = a.updated_id
+      ) as tbl1
     where tbl1.rnum > #{current_page,jdbcType=INTEGER} and #{page_size,jdbcType=INTEGER} >= tbl1.rnum
   </select>
 
@@ -81,9 +84,11 @@
           <result property="desc" column="desc" />
           <result property="deleteYn" column="delete_yn" />
           <result property="createdDtm" column="created_dtm" />
-          <result property="createdId" column="created_id" />
+<!--          <result property="createdId" column="created_id" />-->
           <result property="updatedDtm" column="updated_dtm" />
-          <result property="updatedId" column="updated_id" />
+<!--          <result property="updatedId" column="updated_id" />-->
+          <association property="createdId" column="created_id" columnPrefix="us_"/>
+          <association property="updatedId" column="updated_id" columnPrefix="us1_"/>
           <collection  property="listImg"  javaType="ArrayList" ofType="Image" resultMap="productImgList" columnPrefix="img_" />
           <collection  property="listCategory"  javaType="ArrayList" ofType="Category" resultMap="productCtgList" columnPrefix="ctg_"  />
 

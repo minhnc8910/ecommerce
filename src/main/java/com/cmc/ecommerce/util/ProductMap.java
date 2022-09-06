@@ -2,7 +2,7 @@ package com.cmc.ecommerce.util;
 
 
 import com.cmc.ecommerce.dto.ProductDTOUSER;
-import com.cmc.ecommerce.dto.ProductMapper;
+import com.cmc.ecommerce.dto.ProductUserDTO;
 import com.cmc.ecommerce.model.Product;
 
 import java.util.ArrayList;
@@ -20,16 +20,16 @@ public class ProductMap {
         return product;
     }
 
-    public static ProductMapper dtoMapProduct(Product item){
-            return new ProductMapper(item.getId(), item.getName(),item.getPrice() , item.getDesc(), ImageMap.MapImage( item.getListImg()),
+    public static ProductUserDTO dtoMapProduct(Product item){
+            return new ProductUserDTO(item.getId(), item.getName(),item.getPrice() , item.getDesc(), ImageMap.MapImage( item.getListImg()),
                     CategoryMap.MapImage(item.getListCategory()));
     }
 
-    public static List<ProductMapper> dtoMapProduct(List<Product> list){
-        List<ProductMapper> listDTO = new ArrayList<>();
+    public static List<ProductUserDTO> dtoMapProduct(List<Product> list){
+        List<ProductUserDTO> listDTO = new ArrayList<>();
         for (Product item:list
              ) {
-            ProductMapper itemDTO = new ProductMapper(item.getId(), item.getName(),item.getPrice() , item.getDesc(), ImageMap.MapImage( item.getListImg()),
+            ProductUserDTO itemDTO = new ProductUserDTO(item.getId(), item.getName(),item.getPrice() , item.getDesc(), ImageMap.MapImage( item.getListImg()),
                     CategoryMap.MapImage(item.getListCategory()));
             listDTO.add(itemDTO);
         }
